@@ -7,9 +7,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import org.carlosburuel.tickandmorty.presentation.viewmodel.CharacterViewmodel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CharacterScreen() {
+    val viewModel = koinViewModel<CharacterViewmodel>()
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
