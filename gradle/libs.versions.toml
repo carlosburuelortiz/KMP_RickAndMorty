@@ -26,6 +26,8 @@ material-icons-extended = { module = "org.jetbrains.compose.material:material-ic
 
 # Orbit
 orbit_core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
+orbit_viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
+orbit_compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
 orbit_testing = { module = "org.orbit-mvi:orbit-test", version.ref = "orbit" }
 
 # Koin

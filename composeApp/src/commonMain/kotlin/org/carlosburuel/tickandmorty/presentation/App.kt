@@ -28,7 +28,7 @@ import coil3.compose.setSingletonImageLoaderFactory
 import coil3.network.ktor3.KtorNetworkFetcherFactory
 import org.carlosburuel.tickandmorty.presentation.model.NavigationBarItemModel
 import org.carlosburuel.tickandmorty.presentation.navigation.Screen
-import org.carlosburuel.tickandmorty.presentation.screen.CharacterScreen
+import org.carlosburuel.tickandmorty.presentation.screen.character.CharacterScreen
 import org.carlosburuel.tickandmorty.presentation.screen.EpisodeScreen
 import org.carlosburuel.tickandmorty.presentation.screen.LocationScreen
 
