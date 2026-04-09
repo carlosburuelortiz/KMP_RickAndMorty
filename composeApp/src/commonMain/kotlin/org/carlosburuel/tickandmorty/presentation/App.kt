@@ -14,23 +14,24 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.network.ktor3.KtorNetworkFetcherFactory
 import org.carlosburuel.tickandmorty.presentation.model.NavigationBarItemModel
 import org.carlosburuel.tickandmorty.presentation.navigation.Screen
-import org.carlosburuel.tickandmorty.presentation.screen.character.CharacterScreen
 import org.carlosburuel.tickandmorty.presentation.screen.EpisodeScreen
 import org.carlosburuel.tickandmorty.presentation.screen.LocationScreen
+import org.carlosburuel.tickandmorty.presentation.screen.character.CharacterScreen
 
 @Composable
 @Preview
@@ -63,7 +64,8 @@ fun App() {
         )
 
         val navController = rememberNavController()
-        var selectedItem by remember { mutableStateOf(items.first().route) }
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -72,11 +74,16 @@ fun App() {
                 NavigationBar {
                     items.forEach { item ->
                         NavigationBarItem(
-                            selected = item.route == selectedItem,
+                            selected = currentDestination?.hierarchy?.any { it.hasRoute(item.route::class) } == true,
                             label = { Text(item.label) },
                             onClick = {
-                                selectedItem = item.route
-                                navController.navigate(selectedItem)
+                                navController.navigate(item.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             },
                             icon = {
                                 Icon(
